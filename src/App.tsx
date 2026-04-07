@@ -70,8 +70,11 @@ export default function App() {
       if (transcript.length === lastHealLengthRef.current) return;
       if (isRecording) return; // Don't heal while recording to avoid jumping text
 
+      const activeKey = process.env.GEMINI_API_KEY || apiKey;
+      if (!activeKey) return;
+
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+        const ai = new GoogleGenAI({ apiKey: activeKey });
         const response = await ai.models.generateContent({
           model: "gemini-3-flash-preview",
           contents: `The following is a raw lecture transcript with potential word splicing (e.g. "trans crip tion"), typos, and stutters. 
@@ -102,8 +105,11 @@ export default function App() {
     const extractTopics = async () => {
       if (transcript.length - lastTopicExtractionRef.current < 500) return;
       
+      const activeKey = process.env.GEMINI_API_KEY || apiKey;
+      if (!activeKey) return;
+
       try {
-        const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+        const ai = new GoogleGenAI({ apiKey: activeKey });
         const response = await ai.models.generateContent({
           model: "gemini-3-flash-preview",
           contents: `Extract 3-5 key topics or keywords from this lecture transcript. Return them as a comma-separated list. No extra text.\n\nTRANSCRIPT:\n${transcript}`,
