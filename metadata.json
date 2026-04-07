@@ -1,0 +1,7 @@
+{
+  "name": "Lecture Notes",
+  "description": "Real-time lecture transcription and AI-powered note generation with PDF and YouTube context integration.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
